@@ -17,11 +17,11 @@ const initialState: QuestionsState = {
   questions: [], // Store the questions to display
   status: "loading",
   questionIndex: 0, // Keep track of the current question index
-  userAnswer: null, // Store the user's answer
+  userAnswer: null, // Store the answer selected by the user for the current question
   userPoints: 0, // Store the user's points
   highscore: loadHighscore(), // Initialize highscore from local storage
   secondsRemaining: null, // Store the seconds remaining
-  userAnswers: [], // Initialize user answers
+  userAnswers: [], // Store all the user's answers 
 };
 
 // Create a context
