@@ -1,0 +1,7 @@
+1. Sort quiz by difficulty level
+
+2. Allow user to input number of questions
+
+3. Store our highscore into the API
+
+4. Allow the user to go back to view their answers
