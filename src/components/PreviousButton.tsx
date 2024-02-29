@@ -8,7 +8,7 @@ function PreviousButton() {
     return (
       <button
         className="btn btn-ui"
-        onClick={() => dispatch({ actionType: "previous_question" })}
+        onClick={() => dispatch({ actionType: "question/previous" })}
       >
         Previous
       </button>

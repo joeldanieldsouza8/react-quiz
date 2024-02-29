@@ -23,7 +23,7 @@ function FinishScreen() {
       <div>
         <button
           className="btn btn-ui"
-          onClick={() => dispatch({ actionType: "restart_quiz" })}
+          onClick={() => dispatch({ actionType: "quiz/restart" })}
         >
           Restart
         </button>

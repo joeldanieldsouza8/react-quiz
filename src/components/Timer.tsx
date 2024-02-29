@@ -13,7 +13,7 @@ function Timer() {
 
   useEffect(() => {
     const interval = setInterval(() => {
-      dispatch({ actionType: "timer_tick" });
+      dispatch({ actionType: "timer" });
       // console.log("This will run every second!"); // debug
     }, 1000);
 

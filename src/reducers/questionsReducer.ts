@@ -1,4 +1,4 @@
-export interface Question {
+export interface QuestionProps {
   question: string;
   options: string[];
   correctOption: number;
@@ -11,8 +11,8 @@ export interface Question {
 // 'questions' is the list of questions to display and is initially set to 'allQuestions'
 
 export interface QuestionsState {
-  allQuestions: Question[]; // Store the original list of questions from the API
-  questions: Question[]; // Store the questions to display
+  allQuestions: QuestionProps[]; // Store the original list of questions from the API
+  questions: QuestionProps[]; // Store the questions to display
   status: "loading" | "error" | "ready" | "active" | "finished";
   questionIndex: number; // Keep track of the current question index
   userAnswer: number | null; // Store the user's answer
@@ -24,46 +24,46 @@ export interface QuestionsState {
 
 export type QuestionsAction =
   | {
-      actionType: "data_recieved";
-      newDataPayload: Question[];
+      actionType: "data/recieved";
+      newDataPayload: QuestionProps[];
     }
   | {
-      actionType: "data_error";
+      actionType: "data/error";
     }
   | {
-      actionType: "start_quiz";
+      actionType: "quiz/start";
     }
   | {
-      actionType: "user_answer";
+      actionType: "user/answer";
       userAnswerPayload: number;
     }
   | {
-      actionType: "next_question";
+      actionType: "question/next";
     }
   | {
-      actionType: "previous_question";
+      actionType: "question/previous";
     }
   | {
-      actionType: "finish_quiz";
+      actionType: "quiz/finish";
     }
   | {
-      actionType: "restart_quiz";
+      actionType: "quiz/restart";
     }
   | {
-      actionType: "timer_tick";
+      actionType: "timer";
     }
   | {
-      actionType: "option_selected";
+      actionType: "option";
       difficultyPayload: "all" | "easy" | "medium" | "hard";
     }
   | {
-      actionType: "set_num_questions";
+      actionType: "questions/amount";
       numQuestionsPayload: number;
     };
 
 const SECS_PER_QUESTION = 30;
 
-export function questionsReducer(
+function questionsReducer(
   questionsState: QuestionsState,
   action: QuestionsAction
 ): QuestionsState {
@@ -71,7 +71,7 @@ export function questionsReducer(
   // console.log("action", action); // debug
 
   switch (action.actionType) {
-    case "data_recieved": {
+    case "data/recieved": {
       return {
         ...questionsState,
         allQuestions: action.newDataPayload, // Store the original list
@@ -80,11 +80,11 @@ export function questionsReducer(
       };
     }
 
-    case "data_error": {
+    case "data/error": {
       return { ...questionsState, status: "error" };
     }
 
-    case "start_quiz": {
+    case "quiz/start": {
       // console.log("Start quiz");
       return {
         ...questionsState,
@@ -93,7 +93,7 @@ export function questionsReducer(
       };
     }
 
-    // case "user_answer": {
+    // case "user/answer": {
     //   const currentQuestion: Question =
     //     questionsState.questions[questionsState.questionIndex];
 
@@ -108,9 +108,9 @@ export function questionsReducer(
     //   };
     // }
 
-    case "user_answer": {
+    case "user/answer": {
       // Gets the current question from the questions array by using the questionIndex from the state object
-      const currentQuestion: Question =
+      const currentQuestion: QuestionProps =
         questionsState.questions[questionsState.questionIndex];
 
       // Creates a new array to store the user's answers to all questions so far answered in the quiz currently by spreading the userAnswers array and adding the userAnswerPayload to the end of the array
@@ -133,7 +133,7 @@ export function questionsReducer(
       };
     }
 
-    case "next_question": {
+    case "question/next": {
       return {
         ...questionsState,
         questionIndex: questionsState.questionIndex + 1, // Move to the next question
@@ -141,7 +141,7 @@ export function questionsReducer(
       };
     }
 
-    case "previous_question": {
+    case "question/previous": {
       // Stores the index position of the previous question in the questions array by subtracting 1 from the questionIndex
       const previousQuestionIndex = questionsState.questionIndex - 1;
 
@@ -152,7 +152,7 @@ export function questionsReducer(
       };
     }
 
-    case "finish_quiz": {
+    case "quiz/finish": {
       // console.log("Finish quiz");
       return {
         ...questionsState,
@@ -164,7 +164,7 @@ export function questionsReducer(
       };
     }
 
-    case "restart_quiz": {
+    case "quiz/restart": {
       // console.log("Restart quiz");
       return {
         ...questionsState,
@@ -176,7 +176,7 @@ export function questionsReducer(
       };
     }
 
-    case "timer_tick": {
+    case "timer": {
       // console.log("Timer tick");
       return {
         ...questionsState,
@@ -191,7 +191,7 @@ export function questionsReducer(
       };
     }
 
-    case "option_selected": {
+    case "option": {
       if (action.difficultyPayload === "all") {
         return {
           ...questionsState,
@@ -217,7 +217,7 @@ export function questionsReducer(
       }
     }
 
-    case "set_num_questions": {
+    case "questions/amount": {
       const numQuestions = action.numQuestionsPayload; // Assume this payload carries the desired number of questions
 
       // Slice the 'questions' array to only include the number of questions user wants
@@ -233,3 +233,5 @@ export function questionsReducer(
       return questionsState;
   }
 }
+
+export { questionsReducer };

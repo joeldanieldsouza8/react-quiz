@@ -5,13 +5,13 @@ function StartScreen() {
   const { questions } = questionsState;
 
   function handleStart() {
-    dispatch({ actionType: "start_quiz" });
+    dispatch({ actionType: "quiz/start" });
   }
 
   function handleDifficultyChange(event: React.ChangeEvent<HTMLSelectElement>) {
     const difficulty = event.target.value as "all" | "easy" | "medium" | "hard"; // Type assertion
 
-    dispatch({ actionType: "option_selected", difficultyPayload: difficulty });
+    dispatch({ actionType: "option", difficultyPayload: difficulty });
   }
 
   function handleNumQuestionsChange(
@@ -30,7 +30,7 @@ function StartScreen() {
     }
 
     dispatch({
-      actionType: "set_num_questions",
+      actionType: "questions/amount",
       numQuestionsPayload: numQuestions,
     });
   }

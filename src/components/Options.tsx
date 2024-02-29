@@ -9,7 +9,7 @@ function Options() {
 
   function handleOptionClick(optionIndex: number) {
     if (!hasAnswered) {
-      dispatch({ actionType: "user_answer", userAnswerPayload: optionIndex });
+      dispatch({ actionType: "user/answer", userAnswerPayload: optionIndex });
     }
   }
 
